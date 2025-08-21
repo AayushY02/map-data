@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>PMTiles Test</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css">
+  <style>html,body,#map{height:100%;margin:0}</style>
+</head>
+<body>
+  <div id="map"></div>
+  <script type="module">
+    import maplibregl from "https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js";
+    import { Protocol } from "https://unpkg.com/pmtiles@3.0.6/dist/index.js";
+
+    const protocol = new Protocol();
+    maplibregl.addProtocol("pmtiles", protocol.tile);
+
+    const map = new maplibregl.Map({
+      container: "map",
+      center: [139.97, 35.86], // adjust if needed
+      zoom: 10,
+      style: {
+        version: 8,
+        sources: {
+          kashiwa_shops: {
+            type: "vector",
+            url: "pmtiles://https://aayushy02.github.io/map-data/kashiwa_shops.pmtiles"
+          }
+        },
+        layers: [
+          // replace "roads" with the *actual* source-layer name inside your pmtiles
+          { id: "kashiwa_shops", type: "circle", source: "kashiwa_shops", "source-layer": "kashiwa_shops" }
+        ]
+      }
+    });
+  </script>
+</body>
+</html>
